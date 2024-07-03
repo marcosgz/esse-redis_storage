@@ -36,20 +36,6 @@ module Esse
         batch_id
       end
 
-      # Retrieve a batch of ids to process
-      # @return [Array<String, Array<String>>] The batch id and the values of the batch
-      # def dequeue
-      #   with do |conn|
-      #     # @TODO REDIS 6.2 implements HRANDFIELD
-      #     _cursor, arr = conn.hscan(name, 0, count: 1)
-      #     batch_id, values = arr.first
-      #     return if batch_id.nil? || values.nil?
-
-      #     conn.hdel(name, batch_id)
-      #     [batch_id, values.split(",")]
-      #   end
-      # end
-
       # Fetch and remove a batch of ids to process from the queue using batch_id
       # @param batch_id [String] The batch id to fetch
       # @yield [Array<String>] The values of the batch
@@ -100,35 +86,3 @@ module Esse
     end
   end
 end
-
-# ids = (1..1000).to_a
-# conn = Redis.new
-# result = Benchmark.bm do |x|
-#   x.report("string ids") do
-#     10000.times do
-#       conn.set("foo", ids.join(","))
-#       conn.get("foo").split(",")
-#       conn.del("foo")
-#     end
-#   end
-
-#   x.report("set ids") do
-#     10000.times do
-#       conn.sadd("foo", ids)
-#       conn.smembers("foo")
-#       conn.del("foo")
-#     end
-#   end
-
-#   x.report("list ids") do
-#     10000.times do
-#       conn.rpush("foo", ids)
-#       conn.lrange("foo", 0, -1)
-#       conn.del("foo")
-#     end
-#   end
-# end
-
-# string ids  1.931814   0.108048   2.039862 (  2.515498)
-# set ids  8.701828   0.181777   8.883605 ( 13.685118)
-# list ids  8.062618   0.181341   8.243959 ( 11.858064)

@@ -55,26 +55,6 @@ RSpec.describe Esse::RedisStorage::Queue do
     end
   end
 
-  # describe "#dequeue" do
-  #   let(:queue) { described_class.new(name: "my-queue") }
-
-  #   before do
-  #     queue.clear
-  #   end
-
-  #   it "dequeues a batch" do
-  #     Esse.config.redis.hset("esse:queue:my-queue", "my-id", "1,2")
-  #     batch_id, values = queue.dequeue
-  #     expect(batch_id).to eq("my-id")
-  #     expect(values).to eq(%w[1 2])
-  #     expect(Esse.config.redis.hget("esse:queue:my-queue", "my-id")).to be_nil
-  #   end
-
-  #   it "returns nil if the queue is empty" do
-  #     expect(queue.dequeue).to be_nil
-  #   end
-  # end
-
   describe "#fetch" do
     let(:queue) { described_class.new(name: "my-queue") }
 
