@@ -20,21 +20,13 @@ $ bundle install
 
 ## Configuration
 
-This gem adds the `redis_options` configuration option to the `Esse::Config` class.
+This gem adds the `redis` configuration option to the `Esse::Config` class.
 
 ```ruby
 Esse.configure do |config|
-  config.redis_options = {
-    # Options are passed to the `Redis.new` method.
-    url: 'redis://localhost:6379',
-
-    # The namespace to use for the Redis keys.
-    namespace: 'esse',
-
-    # Options are passed to the `ConnectionPool.new` method.
-    pool_size: 5,
-    pool_timeout: 5,
-  }
+  config.redis = ConnectionPool.new(size: 10, timeout: 1) do
+    Redis.new(url: ENV.fetch('REDIS_URL', 'redis://0.0.0.0:6379'))
+  end
 end
 ```
 
