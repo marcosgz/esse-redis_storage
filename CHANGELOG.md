@@ -6,4 +6,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## 0.0.1 - 2024-07-03
 The first release of the esse-redis-storage plugin
-* Add `redis_options` configuration option to the `Esse::Config` class.
+* Add `redis` configuration option to the `Esse::Config` class.
+* `Esse::RedisStorage::Pool` class to handle the redis connection pool.
