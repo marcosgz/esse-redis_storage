@@ -121,4 +121,3 @@ RSpec.describe Esse::RedisStorage::Queue do
     end
   end
 end
-
