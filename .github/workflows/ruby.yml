@@ -11,12 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        image: redis:alpine
+        ports:
+          - 6379:6379
     strategy:
       matrix:
         ruby-version:
@@ -35,6 +32,5 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
-          rubygems: latest
       - name: Run tests
         run: bundle exec rspec
