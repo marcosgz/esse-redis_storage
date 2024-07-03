@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "esse", ">= 0.2.4"
   spec.add_dependency "redis", ">= 4.0.0"
+  spec.add_development_dependency "connection_pool"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "standard"
