@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    esse-redis-storage (0.0.1)
+    esse-redis_storage (0.0.1)
       esse (>= 0.2.4)
       redis (>= 4.0.0)
 
@@ -99,7 +99,7 @@ PLATFORMS
 DEPENDENCIES
   connection_pool
   esse!
-  esse-redis-storage!
+  esse-redis_storage!
   esse-rspec
   pry
   rspec

@@ -9,7 +9,7 @@ This gems is a add-on for the [Esse](https://github.com/marcosgz/esse) search li
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'esse-redis-storage'
+gem 'esse-redis_storage'
 ```
 
 And then execute:
@@ -38,7 +38,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/marcosgz/esse-redis-storage.
+Bug reports and pull requests are welcome on GitHub at https://github.com/marcosgz/esse-redis_storage.
 
 ## License
 
