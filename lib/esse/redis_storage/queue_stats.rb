@@ -28,7 +28,7 @@ module Esse
         private
 
         def redis_connection
-          Esse.config.redis
+          Esse.config.redis_pool
         end
       end
     end

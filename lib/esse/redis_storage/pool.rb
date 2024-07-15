@@ -16,11 +16,7 @@ module Esse
         if connection.respond_to?(:with)
           @connection = connection
         else
-          @connection = if connection.respond_to?(:client)
-            connection
-          else
-            ::Redis.new(*[connection].compact)
-          end
+          @connection = connection ? ::Redis.new(connection) : ::Redis.new
           @connection.extend(ConnectionPoolLike)
         end
       end

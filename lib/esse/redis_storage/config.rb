@@ -9,6 +9,10 @@ module Esse
 
       module InstanceMethods
         attr_accessor :redis
+
+        def redis_pool
+          @redis_pool ||= Esse::RedisStorage::Pool.new(redis)
+        end
       end
     end
   end

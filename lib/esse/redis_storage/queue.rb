@@ -4,6 +4,8 @@ module Esse
   module RedisStorage
     class Queue
       include Enumerable
+      extend Forwardable
+      def_delegator :redis_connection, :with
 
       GROUP = "queue"
       SEPARATOR = ":"
@@ -80,8 +82,8 @@ module Esse
 
       private
 
-      def with
-        Esse.config.redis.with { |conn| yield conn }
+      def redis_connection
+        Esse.config.redis_pool
       end
     end
   end
