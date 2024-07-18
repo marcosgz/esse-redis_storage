@@ -20,6 +20,11 @@ RSpec.describe Esse::RedisStorage::Queue do
       expect(model).to be_an_instance_of(described_class)
       expect(model.name).to eq("esse:queue:animals:cat")
     end
+
+    it "accepts an attribute name" do
+      model = described_class.for(repo: AnimalsIndex::Cat, attribute_name: "name")
+      expect(model.name).to eq("esse:queue:animals:cat:name")
+    end
   end
 
   describe ".batch_id" do

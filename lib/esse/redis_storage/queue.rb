@@ -16,8 +16,8 @@ module Esse
         SecureRandom.uuid
       end
 
-      def self.for(repo:)
-        name = [repo.index.index_name, repo.repo_name].compact.join(SEPARATOR)
+      def self.for(repo:, attribute_name: nil)
+        name = [repo.index.index_name, repo.repo_name, attribute_name].compact.join(SEPARATOR)
         new(name: name)
       end
 
