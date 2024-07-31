@@ -31,9 +31,10 @@ module Esse
       def enqueue(id: nil, values: [])
         return if values.nil? || values.empty?
 
+        values = ::Esse::ArrayUtils.wrap(values)
         batch_id = id || self.class.batch_id
         with do |conn|
-          conn.hset(name, batch_id, values.join(","))
+          conn.hset(name, batch_id, ::MultiJson.dump(values))
         end
         batch_id
       end
@@ -46,7 +47,7 @@ module Esse
           values = conn.hget(name, batch_id)
           return unless values
 
-          yield values.split(",")
+          yield ::MultiJson.load(values)
           conn.hdel(name, batch_id)
         end
       end
@@ -75,7 +76,7 @@ module Esse
       def each
         with do |conn|
           conn.hscan_each(name, count: 1000) do |batch_id, values|
-            yield batch_id, values.split(",")
+            yield batch_id, ::MultiJson.load(values)
           end
         end
       end
