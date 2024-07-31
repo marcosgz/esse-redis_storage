@@ -1,17 +1,18 @@
 GIT
   remote: https://github.com/marcosgz/esse.git
-  revision: ebbe8016650c2d090873a8799e8b127a39a592bf
+  revision: 7d8fef8646a2f6acc3bfa475f351cfcd7d88fe17
   branch: main
   specs:
-    esse (0.2.6)
+    esse (0.3.4)
       multi_json
       thor (>= 0.19)
 
 PATH
   remote: .
   specs:
-    esse-redis_storage (0.0.2)
-      esse (>= 0.2.4)
+    esse-redis_storage (0.1.0)
+      esse (>= 0.3.2)
+      multi_json (>= 1.0.0)
       redis (>= 4.0.0)
 
 GEM

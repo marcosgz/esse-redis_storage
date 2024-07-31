@@ -2,6 +2,7 @@
 
 require "esse"
 require "redis"
+require "multi_json"
 require "forwardable"
 require "securerandom"
 

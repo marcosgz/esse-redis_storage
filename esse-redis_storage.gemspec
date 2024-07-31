@@ -29,8 +29,9 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "esse", ">= 0.2.4"
+  spec.add_dependency "esse", ">= 0.3.2"
   spec.add_dependency "redis", ">= 4.0.0"
+  spec.add_dependency "multi_json", ">= 1.0.0"
   spec.add_development_dependency "connection_pool"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rspec"

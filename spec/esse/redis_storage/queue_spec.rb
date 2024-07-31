@@ -40,13 +40,19 @@ RSpec.describe Esse::RedisStorage::Queue do
     it "generates a random id and enqueues the payload" do
       batch_id = queue.enqueue(values: [1, 2])
       expect(batch_id).to be_a(String)
-      expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq("1,2")
+      expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq("[1,2]")
     end
 
     it "enqueues the payload with the given id" do
       batch_id = queue.enqueue(id: "my-id", values: [1, 2])
       expect(batch_id).to eq("my-id")
-      expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq("1,2")
+      expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq("[1,2]")
+    end
+
+    it "enqueues the payload using array of objects" do
+      batch_id = queue.enqueue(values: [{id: 1}, {id: 2}])
+      expect(batch_id).to be_a(String)
+      expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq(%([{"id":1},{"id":2}]))
     end
 
     it "does not enqueue empty values" do
@@ -68,7 +74,7 @@ RSpec.describe Esse::RedisStorage::Queue do
     end
 
     it "fetches a batch" do
-      Esse.config.redis.hset("esse:queue:my-queue", "my-id", "1,2")
+      Esse.config.redis.hset("esse:queue:my-queue", "my-id", '["1","2"]')
       queue.fetch("my-id") do |values|
         expect(values).to eq(%w[1 2])
       end
@@ -82,13 +88,13 @@ RSpec.describe Esse::RedisStorage::Queue do
     end
 
     it "does not remove the batch if yield raises an error" do
-      Esse.config.redis.hset("esse:queue:my-queue", "my-id", "1,2")
+      Esse.config.redis.hset("esse:queue:my-queue", "my-id", "[1,2]")
       expect do
         queue.fetch("my-id") do |_values|
           raise "error"
         end
       end.to raise_error("error")
-      expect(Esse.config.redis.hget("esse:queue:my-queue", "my-id")).to eq("1,2")
+      expect(Esse.config.redis.hget("esse:queue:my-queue", "my-id")).to eq("[1,2]")
     end
   end
 
@@ -100,12 +106,12 @@ RSpec.describe Esse::RedisStorage::Queue do
     end
 
     it "iterates over each batch" do
-      Esse.config.redis.hset("esse:queue:my-queue", "my-id-1", "1,2")
-      Esse.config.redis.hset("esse:queue:my-queue", "my-id-2", "3,4")
+      Esse.config.redis.hset("esse:queue:my-queue", "my-id-1", "[1,2]")
+      Esse.config.redis.hset("esse:queue:my-queue", "my-id-2", "[3,4]")
 
       expect { |b| queue.each(&b) }.to yield_successive_args(
-        ["my-id-1", %w[1 2]],
-        ["my-id-2", %w[3 4]]
+        ["my-id-1", [1, 2]],
+        ["my-id-2", [3, 4]]
       )
 
       expect(queue.size).to eq(2)
@@ -120,7 +126,7 @@ RSpec.describe Esse::RedisStorage::Queue do
     end
 
     it "deletes a batch" do
-      Esse.config.redis.hset("esse:queue:my-queue", "my-id", "1,2")
+      Esse.config.redis.hset("esse:queue:my-queue", "my-id", "[1,2]")
       queue.delete("my-id")
       expect(Esse.config.redis.hget("esse:queue:my-queue", "my-id")).to be_nil
     end
