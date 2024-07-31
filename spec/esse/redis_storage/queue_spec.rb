@@ -49,6 +49,12 @@ RSpec.describe Esse::RedisStorage::Queue do
       expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq("1,2")
     end
 
+    it "enqueues the payload using array of objects" do
+      batch_id = queue.enqueue(values: [{id: 1}, {id: 2}])
+      expect(batch_id).to be_a(String)
+      expect(Esse.config.redis.hget("esse:queue:my-queue", batch_id)).to eq(%({"id":1},{"id":2}))
+    end
+
     it "does not enqueue empty values" do
       batch_id = queue.enqueue(values: [])
       expect(batch_id).to be_nil
