@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    esse-redis_storage (0.1.0)
+    esse-redis_storage (0.1.1)
       esse (>= 0.3.2)
       multi_json (>= 1.0.0)
       redis (>= 4.0.0)
