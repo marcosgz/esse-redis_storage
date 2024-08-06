@@ -13,7 +13,7 @@ module Esse
       attr_reader :name
 
       def self.batch_id
-        SecureRandom.uuid
+        String.new(Time.now.strftime("%Y%m%d%H%M%S%L-")) << SecureRandom.hex(4)
       end
 
       def self.for(repo:, attribute_name: nil)
@@ -28,13 +28,14 @@ module Esse
       # Enqueue a batch of ids to process
       # @param id [String] The batch id
       # @param values [Array<String>] The values of the batch
-      def enqueue(id: nil, values: [])
+      def enqueue(id: nil, values: [], ttl: nil)
         return if values.nil? || values.empty?
 
         values = ::Esse::ArrayUtils.wrap(values)
         batch_id = id || self.class.batch_id
         with do |conn|
           conn.hset(name, batch_id, ::MultiJson.dump(values))
+          conn.expire(name, ttl) if ttl
         end
         batch_id
       end
