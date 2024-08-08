@@ -8,7 +8,7 @@ module Esse
       end
 
       module InstanceMethods
-        attr_accessor :redis
+        attr_accessor :redis, :redis_queue_ttl
 
         def redis_pool
           @redis_pool ||= Esse::RedisStorage::Pool.new(redis)

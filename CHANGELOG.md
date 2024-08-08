@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.1.2 - 2024-08-08
+* Add `redis_queue_ttl` configuration option to the `Esse::Config` class.
+
 ## 0.1.1 - 2024-08-06
 * Add TTL to the enqueued items in the queue.
 * Included current time in the rand batch id to be more human readable.

@@ -17,4 +17,11 @@ RSpec.describe Esse::RedisStorage::Config do
       expect(Esse.config.redis).to eq(redis)
     end
   end
+
+  describe "#redis_queue_ttl" do
+    it "returns the given queue_ttl" do
+      Esse.config.redis_queue_ttl = 10
+      expect(Esse.config.redis_queue_ttl).to eq(10)
+    end
+  end
 end
