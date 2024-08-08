@@ -61,6 +61,14 @@ RSpec.describe Esse::RedisStorage::Queue do
       expect(Esse.config.redis.ttl("esse:queue:my-queue")).to be_within(1).of(10)
     end
 
+    it "uses the default ttl from config" do
+      Esse.config.redis_queue_ttl = 20
+      batch_id = queue.enqueue(values: [1, 2])
+      expect(batch_id).to be_a(String)
+      expect(Esse.config.redis.ttl("esse:queue:my-queue")).to be_within(1).of(20)
+      Esse.config.redis_queue_ttl = nil
+    end
+
     it "does not enqueue empty values" do
       batch_id = queue.enqueue(values: [])
       expect(batch_id).to be_nil

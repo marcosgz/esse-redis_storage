@@ -31,6 +31,7 @@ module Esse
       def enqueue(id: nil, values: [], ttl: nil)
         return if values.nil? || values.empty?
 
+        ttl ||= Esse.config.redis_queue_ttl
         values = ::Esse::ArrayUtils.wrap(values)
         batch_id = id || self.class.batch_id
         with do |conn|
