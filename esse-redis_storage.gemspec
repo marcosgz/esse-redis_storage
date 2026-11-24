@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "Add-on for the esse gem to be used with Redis as a storage backend."
   spec.description = "Add-on for the esse gem to be used with Redis as a storage backend."
   spec.homepage = "https://github.com/marcosgz/esse-redis_storage"
-  spec.license = "MIT"
+  spec.license = "GPL-3.0-or-later"
   spec.required_ruby_version = ">= 2.7.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
